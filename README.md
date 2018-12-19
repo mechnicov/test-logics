@@ -8,7 +8,9 @@
 
 Для запуска программы наберите:
 
-```ruby test_logics.rb```
+```
+ruby test_logics.rb
+```
 
 Лицензия MIT – см. `LICENSE`
 
