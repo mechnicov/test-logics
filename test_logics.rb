@@ -1,11 +1,6 @@
 require 'timeout'
 require 'csv'
-
-begin
-  require_relative 'lib/test'
-rescue LoadError
-  abort 'Файлы программы повреждены'
-end
+require_relative 'lib/test'
 
 begin
   questions = CSV.read('data/questions.csv')
