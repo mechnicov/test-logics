@@ -20,10 +20,10 @@ class Test
   end
 
   def check_current_answer(user_answer)
-    @right_answers +=1 if user_answer == @questions[@current_id][:right_answer]
+    @right_answers += 1 if user_answer == @questions[@current_id][:right_answer]
   end
 
-  def is_finished?
+  def finished?
     @current_id >= @questions.length - 1
   end
 
