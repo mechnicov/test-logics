@@ -2,14 +2,14 @@ require 'timeout'
 require 'csv'
 
 begin
-  require_relative 'test'
+  require_relative 'lib/test'
 rescue LoadError
   abort 'Файлы программы повреждены'
 end
 
 begin
-  questions = CSV.read('questions.csv')
-  results = CSV.read('results.csv')
+  questions = CSV.read('data/questions.csv')
+  results = CSV.read('data/results.csv')
 rescue SystemCallError
   abort 'Отсутствуют файлы для проведения теста'
 end
