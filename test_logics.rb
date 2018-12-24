@@ -1,24 +1,23 @@
 require 'timeout'
 require 'csv'
 require_relative 'lib/test'
+require_relative 'lib/question'
+require_relative 'lib/result'
 
-begin
-  questions = CSV.read('data/questions.csv')
-  results = CSV.read('data/results.csv')
-rescue SystemCallError
-  abort 'Отсутствуют файлы для проведения теста'
-end
+current_path = __dir__
+questions_path = current_path + '/data/questions.csv'
+results_path = current_path + '/data/results.csv'
 
-test = Test.new(questions, results)
+test = Test.new(questions_path, results_path)
 
-STDOUT.puts "Сейчас будет #{test.name}, у Вас#{test.test_time_in_min}"
-STDOUT.puts "Количество вопросов: #{questions.length}."
-STDOUT.puts test.intro
+STDOUT.puts "Сейчас будет проведён #{test.name}, у Вас будет #{test.test_time_in_min}"
+STDOUT.puts "Количество вопросов: #{test.questions_quantity}."
+STDOUT.puts test.description
 
-poehali = nil
-until poehali == 'тест'
-  STDOUT.puts 'Наберите ТЕСТ, если готовы'
-  poehali = STDIN.gets.chomp.downcase
+start = nil
+until start == 'старт'
+  STDOUT.puts 'Наберите СТАРТ, если готовы'
+  start = STDIN.gets.chomp.downcase
 end
 
 timeout = false
@@ -35,7 +34,5 @@ rescue Timeout::Error
   timeout = true
 end
 
-STDOUT.puts "\nРезультат теста:"
-STDOUT.puts "\nВы не уложились в: #{test.test_time_in_min}" if timeout
-STDOUT.puts "\nКоличество верных ответов: #{test.right_answers}"
+STDOUT.puts "\nВы не уложились в #{test.test_time_in_min}" if timeout
 STDOUT.puts test.result
