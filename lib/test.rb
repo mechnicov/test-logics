@@ -65,15 +65,21 @@ class Test
   private
 
   def read_questions_from(questions_path)
-    questions = CSV.read(questions_path).map { |line| Question.new(line[0], line[1], line[2]) }
-    @questions = questions.map(&:text)
-    @answers = questions.map(&:answers)
+    questions      =
+                     CSV.
+                       read(questions_path, headers: true).
+                       map { |line| Question.new(line['Вопрос'], line['Варианты ответов'], line['Правильный ответ']) }
+    @questions     = questions.map(&:text)
+    @answers       = questions.map(&:answers)
     @right_answers = questions.map(&:right_answers)
   end
 
   def read_results_from(results_path)
-    results = CSV.read(results_path).map { |line| Result.new(line[0], (line[1].to_i..line[2].to_i)) }
-    @results = results.map(&:text)
+    results         =
+                      CSV.
+                        read(results_path, headers: true).
+                        map { |line| Result.new(line['Результат'], (line['от'].to_i..line['до'].to_i)) }
+    @results        = results.map(&:text)
     @results_ranges = results.map(&:range)
   end
 end
